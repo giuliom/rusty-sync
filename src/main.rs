@@ -1,4 +1,4 @@
-use std::fs;
+use std::fs::{self, read};
 use std::path::{Path, PathBuf};
 use std::io::{self, ErrorKind};
 use walkdir::WalkDir;
@@ -13,17 +13,30 @@ fn main() {
     }
 
     // TODO
-    let source = &args[1];
-    let dest = &args[2];
+    let source = &args[2];
+    let dest = &args[4];
 
    sync(source, dest);
 }
 
 fn sync(source: &String, dest: &String) {
 
-    println!("Source directory: {}", source);
-    println!("Destination directory: {}", dest);
+    let current_dir = std::env::current_dir().unwrap();
+    println!("Current directory: {}", current_dir.display());
+
+    println!("Source directory: {source}");
+    read_folder_content(source);
+    println!("Destination directory: {dest}");
+    read_folder_content(dest);
 }
 
+fn read_folder_content(path: &String){
+    let paths = fs::read_dir(path).unwrap();
+
+    println!("Files:");
+    for path in paths {
+        println!("    {}", path.unwrap().file_name().into_string().unwrap())
+    }
+}
 
 
