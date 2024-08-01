@@ -31,11 +31,8 @@ fn sync(source: &String, dest: &String) {
 }
 
 fn read_folder_content(path: &String){
-    let paths = fs::read_dir(path).unwrap();
-
-    println!("Files:");
-    for path in paths {
-        println!("    {}", path.unwrap().file_name().into_string().unwrap())
+    for entry in WalkDir::new(path).into_iter().filter_map(|e| e.ok()) {
+        println!(" {}", entry.path().display());
     }
 }
 
