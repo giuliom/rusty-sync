@@ -10,7 +10,7 @@ fn main() {
 
     if args.len() != 5 {
         eprintln!("Usage: {} -s <source_directory> -d <destination_directory>", args[0]);
-        std::process::exit(1);
+        std::process::exit(0);
     }
 
     // TODO

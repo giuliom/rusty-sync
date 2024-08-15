@@ -1,6 +1,8 @@
 use std::env;
 
 mod analyze;
+mod crypto;
+mod filesystem;
 
 pub fn sync(source: &String, dest: &String) {
 
