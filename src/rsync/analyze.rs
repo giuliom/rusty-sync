@@ -1,7 +1,7 @@
 use walkdir::WalkDir;
 use std::fs::File;
 
-use crate::sync::crypto;
+use crate::rsync::crypto;
 
 pub fn read_folder_content(path: &String){
     for entry in WalkDir::new(path).into_iter().filter_map(|e| e.ok()) {

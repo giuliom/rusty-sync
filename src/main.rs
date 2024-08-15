@@ -3,7 +3,7 @@ use std::path::{Path, PathBuf};
 use std::io::{self, ErrorKind};
 use std::env;
 
-mod sync;
+mod rsync;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -18,7 +18,7 @@ fn main() {
     let dest = &args[4];
 
     println!("Sync Started");
-    sync::sync(source, dest);
+    rsync::sync::sync(source, dest);
     println!("Sync Completed");
 }
 

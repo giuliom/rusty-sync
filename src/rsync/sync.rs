@@ -1,8 +1,6 @@
 use std::env;
 
-mod analyze;
-mod crypto;
-mod filesystem;
+use crate::rsync::analyze;
 
 pub fn sync(source: &String, dest: &String) {
 
