@@ -1,7 +1,6 @@
-use sha3::digest::block_buffer::Error;
 use sha3::{Digest, Sha3_256};
 use std::fs::File;
-use std::io::{Result, BufReader, Read};
+use std::io::{BufReader, Read};
 
 pub fn generate_hash(file : &File) -> std::io::Result<String> {
     // create a SHA3-256 object
