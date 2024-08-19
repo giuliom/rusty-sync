@@ -1,6 +1,4 @@
-use std::env;
-
-use crate::rsync::analyze;
+use super::analyze;
 
 pub fn sync(source: &String, dest: &String) {
 
@@ -8,7 +6,9 @@ pub fn sync(source: &String, dest: &String) {
     println!("Current directory: {}", current_dir.display());
 
     println!("Source directory: {source}");
-    analyze::read_folder_content(source);
+    let source = analyze::read_folder_content(source);
+    println!("Source: \n{:#?}", source);
     println!("Destination directory: {dest}");
-    analyze::read_folder_content(dest);
+    let destination = analyze::read_folder_content(dest);
+    println!("Destination: \n{:#?}", destination);
 }

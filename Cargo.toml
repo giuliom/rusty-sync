@@ -4,7 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-walkdir = "2.5.0"
 chrono = "0.4.38"
 sha3 = "*"
 hex = "0.4.3"
