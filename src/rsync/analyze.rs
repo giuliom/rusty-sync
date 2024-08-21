@@ -3,6 +3,16 @@ use std::io::ErrorKind;
 use std::path::Path;
 use super::filesystem::{ContentTree, FileData, FolderData};
 
+pub enum ActionType {
+    ADD,
+    MODIFY,
+    DELETE,
+}
+
+pub struct Action {
+    pub category: ActionType,
+}
+
 pub fn read_folder_content(path: &String) -> Result<ContentTree, std::io::Error>{
     let dir = Path::new(path);
  
@@ -49,3 +59,19 @@ pub fn read_folder_content(path: &String) -> Result<ContentTree, std::io::Error>
     Ok(content)
 }
 
+
+pub fn compare(source: &String, dest: &String) -> Result<Vec<Action>, std::io::Error>{
+    println!("Analaysis of source and destination folders");
+
+    let source = read_folder_content(source)?;
+    println!("Source: \n{:#?}", source);
+
+    let destination = read_folder_content(dest)?;
+    println!("Destination: \n{:#?}", destination);
+
+    let actions: Vec<Action> = Vec::new();
+
+    // TODO
+
+    Ok(actions)
+}

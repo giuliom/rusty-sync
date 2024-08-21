@@ -2,7 +2,7 @@ use chrono::{DateTime, Utc};
 use std::{collections::HashMap, fs::{DirEntry, File}, path::Path, time::SystemTime};
 use super::crypto;
 
-#[derive(Clone, Debug)]
+#[derive(Debug)]
 pub struct FolderData {
     pub name: String,
     pub path: String,
@@ -36,7 +36,7 @@ impl FolderData {
     }
 }
 
-#[derive(Clone, Debug)]
+#[derive(Debug)]
 pub struct FileData {
     pub name: String,
     pub path: String,
