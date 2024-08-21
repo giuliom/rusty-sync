@@ -27,7 +27,7 @@ impl FolderData {
         assert!(path.is_dir());
 
         let metadata = std::fs::metadata(path)?;
-        let name = path.get_name();
+        let name = path.get_name()?;
         let path_string = path.to_str().unwrap().to_string();
         let last_modified: DateTime<Utc> = metadata.modified().unwrap_or(SystemTime::now()).into();
 
@@ -55,7 +55,7 @@ impl FileData {
         let file = File::open(dir.path().display().to_string())?;
         let metadata = file.metadata()?;
 
-        let name = dir.get_name();
+        let name = dir.get_name()?;
         let path = dir.path().to_str().unwrap().to_string();
         let extension = dir.path().extension().unwrap().to_str().unwrap().to_string();
         let hash = crypto::generate_hash(&file)?;
@@ -80,17 +80,47 @@ impl ContentTree {
 }
 
 pub trait GetName {
-    fn get_name(&self) -> String;
+    fn get_name(&self) -> std::io::Result<String>;
 }
 
 impl GetName for Path {
-    fn get_name(&self) -> String {
-        self.file_name().unwrap().to_str().unwrap().to_string()
+    fn get_name(&self) -> std::io::Result<String> {
+        if let Some(file_name) = self.file_name() {
+            if let Some(name_str) = file_name.to_str() {
+                return Ok(name_str.to_string());
+            } else {
+                return Err(std::io::Error::new(
+                    std::io::ErrorKind::InvalidData,
+                    "File name contains invalid UTF-8 characters"));
+            }
+        } else {
+            return Err(std::io::Error::new(
+                std::io::ErrorKind::NotFound,
+                "File name not found"));
+        }
     }
 }
 
 impl GetName for DirEntry {
-    fn get_name(&self) -> String {
-        self.file_name().to_str().unwrap().to_string()
+    fn get_name(&self) -> std::io::Result<String> {
+        if let Some(name_str) = self.file_name().to_str() {
+            return Ok(name_str.to_string());
+        } else {
+            return Err(std::io::Error::new(
+                std::io::ErrorKind::InvalidData,
+                "File name contains invalid UTF-8 characters"));
+        }
+    } 
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_invalid_folder_path() {
+        let path = Path::new("./..");
+        let result = FolderData::from_path(path);
+        assert!(result.is_err());
     }
 }
