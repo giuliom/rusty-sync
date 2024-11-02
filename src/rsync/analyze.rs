@@ -75,3 +75,17 @@ pub fn compare(source: &String, dest: &String) -> Result<Vec<Action>, std::io::E
 
     Ok(actions)
 }
+
+
+//TODO
+/*
+
+- Generate hash for all the files, beware: same content will have same hash. What matters, name or content?
+- Abstract FS access for testing and not only
+- Store files and folders data instances in a map by hashes of their paths - does it really matter to track folders?
+- Build a tree model of the filesystem, serializable
+- compare changes between different states
+- create tests based on fictional paths built from text, use json for fake filesystem
+- implement changes resolution algorithms
+
+*/
